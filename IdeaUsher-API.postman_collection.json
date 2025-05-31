@@ -1,0 +1,119 @@
+{
+  "info": {
+    "_postman_id": "ideausher-api-collection-001",
+    "name": "IdeaUsher API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "REST API for Posts and Tags with base64 image support."
+  },
+  "item": [
+    {
+      "name": "Create Tag",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"news\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/tags",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["tags"]
+        }
+      },
+      "response": [
+        {
+          "code": 201,
+          "body": "{\n  \"_id\": \"<tag_id>\",\n  \"name\": \"news\",\n  \"__v\": 0\n}",
+          "header": [
+            { "key": "Content-Type", "value": "application/json" }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Get All Tags",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:3000/tags",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["tags"]
+        }
+      },
+      "response": [
+        {
+          "code": 200,
+          "body": "[{\n  \"_id\": \"<tag_id>\",\n  \"name\": \"news\",\n  \"__v\": 0\n}]",
+          "header": [
+            { "key": "Content-Type", "value": "application/json" }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Create Post",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Sample Post\",\n  \"desc\": \"This is a sample post.\",\n  \"image\": \"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA...\",\n  \"tags\": [\"news\", \"tech\"]\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/posts",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["posts"]
+        }
+      },
+      "response": [
+        {
+          "code": 201,
+          "body": "{\n  \"_id\": \"<post_id>\",\n  \"title\": \"Sample Post\",\n  \"desc\": \"This is a sample post.\",\n  \"image\": \"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA...\",\n  \"tags\": [\"<tag_id1>\", \"<tag_id2>\"],\n  \"createdAt\": \"<date>\",\n  \"updatedAt\": \"<date>\",\n  \"__v\": 0\n}",
+          "header": [
+            { "key": "Content-Type", "value": "application/json" }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Get All Posts",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:3000/posts?sort=-createdAt&page=1&limit=10&keyword=sample&tag=news",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["posts"],
+          "query": [
+            { "key": "sort", "value": "-createdAt" },
+            { "key": "page", "value": "1" },
+            { "key": "limit", "value": "10" },
+            { "key": "keyword", "value": "sample" },
+            { "key": "tag", "value": "news" }
+          ]
+        }
+      },
+      "response": [
+        {
+          "code": 200,
+          "body": "{\n  \"total\": 1,\n  \"page\": 1,\n  \"limit\": 10,\n  \"posts\": [{\n    \"_id\": \"<post_id>\",\n    \"title\": \"Sample Post\",\n    \"desc\": \"This is a sample post.\",\n    \"image\": \"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA...\",\n    \"tags\": [{\n      \"_id\": \"<tag_id>\",\n      \"name\": \"news\",\n      \"__v\": 0\n    }],\n    \"createdAt\": \"<date>\",\n    \"updatedAt\": \"<date>\",\n    \"__v\": 0\n  }]\n}",
+          "header": [
+            { "key": "Content-Type", "value": "application/json" }
+          ]
+        }
+      ]
+    }
+  ]
+} 
