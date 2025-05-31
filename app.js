@@ -66,5 +66,8 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+
+
+
 // Exporting the app
 module.exports = app;

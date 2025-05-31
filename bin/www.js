@@ -7,6 +7,8 @@
 var app = require('../app');
 var debug = require('debug')('ideausher:server');
 var http = require('http');
+const cron = require('node-cron');
+const axios = require('axios');
 
 /**
  * Get port from environment and store in Express.
@@ -88,3 +90,13 @@ function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }
+
+// Schedule a cron job to ping the URL every minute
+cron.schedule('* * * * *', async () => {
+  try {
+    await axios.get('https://idea-usher.onrender.com/');
+    console.log('Pinged https://idea-usher.onrender.com/');
+  } catch (err) {
+    debug('Failed to ping https://idea-usher.onrender.com/: ' + err.message);
+  }
+});
